@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Express Banking System</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Welcome to Express Banking System</h1>
+        </header>
+
+        <!-- Add Account Form -->
+        <div class="form-container">
+            <h2>Add New Account</h2>
+            <form action="/addAccount" method="POST">
+                <label for="accountNumber">Account Number:</label>
+                <input type="text" name="accountNumber" required><br>
+                <label for="balance">Initial Balance:</label>
+                <input type="number" name="balance" step="0.01" required><br>
+                <button type="submit" class="btn">Add Account</button>
+            </form>
+        </div>
+
+        <!-- Transfer Funds Form -->
+        <div class="form-container">
+            <h2>Transfer Funds</h2>
+            <form action="/transfer" method="POST">
+                <label for="fromAccount">From Account Number:</label>
+                <input type="text" name="fromAccount" required><br>
+                <label for="toAccount">To Account Number:</label>
+                <input type="text" name="toAccount" required><br>
+                <label for="amount">Amount to Transfer:</label>
+                <input type="number" name="amount" step="0.01" required><br>
+                <button type="submit" class="btn">Transfer</button>
+            </form>
+        </div>
+
+        <!-- Check Balance Form -->
+        <div class="form-container">
+            <h2>Check Balance</h2>
+            <form action="/checkBalance" method="GET">
+                <label for="accountNumber">Account Number:</label>
+                <input type="text" name="accountNumber" required><br>
+                <button type="submit" class="btn">Check Balance</button>
+            </form>
+        </div>
+
+        <!-- Display Accounts -->
+        <div class="accounts-container">
+            <h2> </h2>
+            <ul id="accountsList"></ul>  <!-- This is where the account data will be inserted -->
+        </div>
+    </div>
+
+    <script>
+        // Retrieve the accounts data (passed from the server)
+        const accounts = JSON.parse('<%= accounts %>');  // Parse the JSON data passed from the server
+
+        // Insert account data into the HTML
+        const accountsList = document.getElementById('accountsList');
+        accounts.forEach(account => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `Account Number: ${account.accountNumber} | Balance: $${account.balance}`;
+            accountsList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>
+
+
+
